@@ -12,6 +12,15 @@ use Test::Differences;
 use FindBin qw($Bin);
 our $TBin = "$Bin/bin";
 
+sub cmd_stdout_like {
+    my $cmd  = shift;
+    my $re   = shift;
+    my $tname = shift || "$cmd; stdout like $re";
+
+    my ($stdout, $stderr) = capture { system("$TBin/$cmd") };
+    like $stdout, $re, $tname;
+}
+
 sub startup : Test(startup => 1) {
     use_ok('Basic');
 }
@@ -25,35 +34,38 @@ sub basic : Test(2) {
     my $out_ok = <<EOSTDOUT;
 Usage:
     basic.t [OPTIONS]
+
 Options:
-    --help -? --usage - Bool. Display the usage message and exit
-    --verbose         - Bool. Say lots about what we do
-    --greet           - Str. Default=World. Who to say hello to.
-    --language        - Str. Default=en. Language to greet in.
+     --help -? --usage - Bool. Display the usage message and exit
+     --verbose         - Bool. Say lots about what we do
+     --greet           - Str. Default=World. Who to say hello to.
+     --language        - Str. Default=en. Language to greet in.
+
 EOSTDOUT
     my $out = $testme->getopt_usage;
-    eq_or_diff $out, $out_ok, "Basic";
+    eq_or_diff $out, $out_ok, "Basic->getopt_usage";
 }
 
-sub basic_cmd_line : Test(6) {
+# Does the error message make it to the message
+sub err_message : Test(1) {
     my $self = shift;
 
-    my $stdout_ok = <<EOSTDOUT;
-Usage:
-    basic [OPTIONS]
-Options:
-    --help -? --usage - Bool. Display the usage message and exit
-    --verbose         - Bool. Say lots about what we do
-    --greet           - Str. Default=World. Who to say hello to.
-    --language        - Str. Default=en. Language to greet in.
-EOSTDOUT
-    my $stderr_ok = "";
-    foreach my $flag (qw/-? --help --usage/) {
-        my $cmd = "$TBin/basic $flag";
-        my ($stdout, $stderr) = capture { system($cmd) };
-        eq_or_diff $stdout, $stdout_ok, "$cmd STDOUT";
-        eq_or_diff $stderr, $stderr_ok, "$cmd STDERR";
-    }
+    my $testme = Basic->new() or die "No object to test with!";
+    my $out = $testme->getopt_usage( err => "Error: Hello World" );
+    like $out, qr/^Error: Hello World\n/, "Basic->getopt_usage( err => ... )";
 }
+
+# Are we trapping command line errors properly. ie in new_with_options
+sub cmd_line_errors : Tests(2) {
+    my $self = shift;
+
+    cmd_stdout_like 'basic --notanoption',
+        qr/^Unknown option: notanoption\nUsage/;
+    cmd_stdout_like 'basic --verbose=2',
+        qr/^Option verbose does not take an argument\nUsage/;
+
+    # TODO : Test all the error traps and test status code.
+}
+
 
 1;
