@@ -2,7 +2,7 @@
 package MooseX::Getopt::Usage;
 
 use 5.010;
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 use Moose::Role;
 use Try::Tiny;
@@ -42,16 +42,33 @@ sub getopt_usage {
     return $args{man} ? $fmtr->manpage(%args) : $fmtr->usage(%args);
 }
 
-# The way new_with_options decides if usage is needed does not fit our needs
-# as we don't supply a usage object. So we do it here.
+# Replace new_with_options.  The way it decides if usage is needed does not fit
+# our needs as we don't supply a usage object. So we do it here.  We also want
+# access to the $pa object returned from process_argv.
 around new_with_options => sub {
     my $orig  = shift;
     my $class = shift;
+    my @params = @_;
     my $self;
+
     try {
-        $self = $class->$orig(@_);
-        $self->getopt_usage( man => 1)   if $self->can('man') and $self->man;
-        $self->getopt_usage( exit => 0 ) if $self->help_flag;
+        # Get in early on the arg passing to look for help or man options.
+        # This makes sure they still work even when required options are missing,
+        # (which would fail construction and stop us seeing the man option).
+        # See github issue #4
+        my $pa = $class->process_argv(@params);
+        my $cli_params = $pa->cli_params;
+        $class->getopt_usage( man => 1)   if $class->can('man') and $cli_params->{man};
+        $class->getopt_usage( exit => 0 ) if $cli_params->{help_flag};
+
+        # Construct the object in the same way as our super new_with_options
+        $self = $class->new(
+            ARGV       => $pa->argv_copy,
+            extra_argv => $pa->extra_argv,
+            ( $pa->usage ? ( usage => $pa->usage ) : () ),
+            %{ $pa->constructor_params }, # explicit params to ->new
+            %{ $pa->cli_params }, # params from CLI
+        );
         return $self;
     }
     catch {
@@ -87,7 +104,7 @@ MooseX::Getopt::Usage - Extend MooseX::Getopt with usage message and man page ge
 
 =head1 VERSION
 
-Version 0.09
+Version 0.10
 
 =head1 SYNOPSIS
 
