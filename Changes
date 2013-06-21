@@ -1,9 +1,16 @@
 Revision history for MooseX-Getopt-Usage
 
+0.12   21st June 2013
+
+    * BugFix: #6 - attr_sort wasn't working on the man page.
+    * BugFix: #1 - Default not shown for Boolean types.
+
+
 0.11    2nd May 2013
 
     * Doesn't assume a terminal. Uses width 72 when no terminal.
     * Documentation updates.
+
 
 0.10    16th Apr 2013
 
