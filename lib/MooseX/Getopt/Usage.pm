@@ -2,7 +2,7 @@
 package MooseX::Getopt::Usage;
 
 use 5.010;
-our $VERSION = '0.16';
+our $VERSION = '0.18';
 
 use Moose::Role;
 use Try::Tiny;
@@ -110,7 +110,7 @@ MooseX::Getopt::Usage - Extend MooseX::Getopt with usage message and man page ge
 
 =head1 VERSION
 
-Version 0.16
+Version 0.18
 
 =head1 SYNOPSIS
 
@@ -298,6 +298,13 @@ your own usage section is to add a SYNOPSIS to your POD.
 If no POD is found a default string of C<"%c [OPTIONS]"> is used.
 
 Note that when selecting POD the headings are removed.
+
+%a, %r and %o expand to a list of all the options on a line. %a gives all
+options, %r only required and %o only optional. Option args get square
+brackets around them, while non-boolean options get an =VALUE added. e.g. using
+a format string of "%c %r %o" might produce:
+
+ makestuff --name=NAME [--verbose] [--type=TYPE]
 
 =head2 format_sections
 
