@@ -4,7 +4,7 @@
       "Mark Pitchless <markpitchless@gmail.com>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4004, CPAN::Meta::Converter version 2.112621",
+   "generated_by" : "Module::Build version 0.4007, CPAN::Meta::Converter version 2.132661",
    "license" : [
       "perl_5"
    ],
@@ -17,10 +17,10 @@
       "build" : {
          "requires" : {
             "Capture::Tiny" : "0.08",
-            "File::Slurp" : 0,
+            "File::Slurp" : "0",
             "Test::Class" : "0.36",
             "Test::Differences" : "0.5",
-            "Test::More" : 0
+            "Test::More" : "0"
          }
       },
       "configure" : {
@@ -30,17 +30,17 @@
       },
       "runtime" : {
          "requires" : {
-            "File::Basename" : 0,
-            "FindBin" : 0,
+            "File::Basename" : "0",
+            "FindBin" : "0",
             "Module::Loaded" : "0.06",
             "Moose" : "1.23",
-            "Moose::Util::TypeConstraints" : 0,
-            "MooseX::Getopt" : 0,
-            "Pod::Text" : 0,
+            "Moose::Util::TypeConstraints" : "0",
+            "MooseX::Getopt" : "0",
+            "Pod::Text" : "0",
             "Pod::Usage" : "1.36",
-            "Term::ANSIColor" : 0,
-            "Term::ReadKey" : 0,
-            "Text::Wrap" : 0,
+            "Term::ANSIColor" : "0",
+            "Term::ReadKey" : "0",
+            "Text::Wrap" : "0",
             "Try::Tiny" : "0.09"
          }
       }
@@ -48,19 +48,19 @@
    "provides" : {
       "MooseX::Getopt::Usage" : {
          "file" : "lib/MooseX/Getopt/Usage.pm",
-         "version" : "0.14"
+         "version" : "0.16"
       },
       "MooseX::Getopt::Usage::Formatter" : {
          "file" : "lib/MooseX/Getopt/Usage/Formatter.pm",
-         "version" : "0.14"
+         "version" : "0.16"
       },
       "MooseX::Getopt::Usage::Pod::Text" : {
          "file" : "lib/MooseX/Getopt/Usage/Pod/Text.pm",
-         "version" : "0.14"
+         "version" : "0.16"
       },
       "MooseX::Getopt::Usage::Role::Man" : {
          "file" : "lib/MooseX/Getopt/Usage/Role/Man.pm",
-         "version" : "0.14"
+         "version" : "0.16"
       }
    },
    "release_status" : "stable",
@@ -69,5 +69,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.14"
+   "version" : "0.16"
 }
