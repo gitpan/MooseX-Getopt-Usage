@@ -2,7 +2,7 @@
 package MooseX::Getopt::Usage;
 
 use 5.010;
-our $VERSION = '0.18';
+our $VERSION = '0.21_01';
 
 use Moose::Role;
 use Try::Tiny;
@@ -110,7 +110,7 @@ MooseX::Getopt::Usage - Extend MooseX::Getopt with usage message and man page ge
 
 =head1 VERSION
 
-Version 0.18
+Version 0.21_01
 
 =head1 SYNOPSIS
 
@@ -310,6 +310,12 @@ a format string of "%c %r %o" might produce:
 
 Pod sections to select for the usage format option. Default is SYNOPSIS.
 Value is an array ref of L<Pod::Select/SECTION SPECIFICATIONS> strings.
+
+=head2 width
+
+Width to wrap output text. Default tests for a terminal, using it's width-1 if
+found (so users get usage or man that fills the terminal but wraps nicely),
+defaulting to 72 otherwise.
 
 =head2 attr_sort
 
@@ -598,6 +604,8 @@ ilmari+cpan@ilmari.org for patching file based tests.
 
 Tomas Doran for discussions and ideas that lead to all the pod mangling
 goodness and the big refactor at version 0.09.
+
+skazakoff for Moose bug fixes.
 
 =head1 COPYRIGHT & LICENSE
 

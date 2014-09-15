@@ -1,7 +1,7 @@
 package MooseX::Getopt::Usage::Formatter;
 
 use 5.010;
-our $VERSION = '0.18';
+our $VERSION = '0.21_01';
 
 use Moose;
 #use MooseX::StrictConstructor;
@@ -64,16 +64,15 @@ has pod_file => (
 
 sub _build_pod_file {
     my $self = shift;
+
+    # Script file, may have inline pod docs
+    my $file = "$FindBin::Bin/$FindBin::Script";
+    return $file if -f $file && contains_pod($file);
+
+    # Use the pod docs from the class
     my $gclass = $self->getopt_class;
-    if ( is_loaded($gclass) ) {
-        return pod_where( {-inc => 1}, $gclass );
-    }
-    else {
-        # Class doesn't seem to be loaded (used) so try the script file. E.g. a
-        # class definition and main pkg runner all in one file.
-        my $file = "$FindBin::Bin/$FindBin::Script";
-        return $file if -f $file && contains_pod($file);
-    }
+    return pod_where( {-inc => 1}, $gclass ) if is_loaded($gclass);
+
     return undef;
 }
 
@@ -121,6 +120,23 @@ sub _build_format {
     }
     return $selected ? $selected : "%c [OPTIONS]";
 }
+
+has width => (
+    is      => "rw",
+    isa     => "Int",
+    lazy_build => 1,
+);
+
+sub _build_width {
+    my $self = shift;
+    my $w = 72;
+    if (-t STDOUT) {
+        my ($tw) = GetTerminalSize();
+        $w = $tw -1 if defined $tw;
+    }
+    return $w;
+}
+
 
 has attr_sort => (
     is      => "rw",
@@ -202,6 +218,7 @@ sub usage {
         options_style => 'text',
     );
     my $parser = MooseX::Getopt::Usage::Pod::Text->new(
+        width    => $self->width,
         headings => $self->headings
     );
     my $out;
@@ -428,12 +445,7 @@ sub _attr_str {
     my $indent  = $args{indent} || 0;
     my $colours = $self->colours;
 
-    my $w = 72;
-    if (-t STDOUT) {
-        my ($tw) = GetTerminalSize();
-        $w = $tw -1 if defined $tw;
-    }
-    local $Text::Wrap::columns  = $w;
+    local $Text::Wrap::columns  = $self->width;
     local $Text::Wrap::unexpand = $self->unexpand;
     local $Text::Wrap::tabstop  = $self->tabstop;
 

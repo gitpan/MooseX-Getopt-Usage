@@ -5,14 +5,16 @@ examples/descusage.pl
 examples/hello-compact.pl
 examples/hello.pl
 examples/synopsis.pl
+examples/always_color.pl
+examples/BaseHello.pm
+examples/compact.pl
+examples/export_sort.pl
+examples/filter_attr.pl
 lib/MooseX/Getopt/Usage.pm
 lib/MooseX/Getopt/Usage/Formatter.pm
 lib/MooseX/Getopt/Usage/Pod/Text.pm
 lib/MooseX/Getopt/Usage/Role/Man.pm
-Makefile.PL
 MANIFEST
-META.json
-META.yml
 README
 t/00-load.t
 t/basic.t
@@ -75,3 +77,6 @@ t/manifest.t
 t/moosex-getopt-usage-formatter.t
 t/pod-coverage.t
 t/pod.t
+Makefile.PL
+META.yml
+META.json
