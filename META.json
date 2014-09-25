@@ -48,26 +48,32 @@
    "provides" : {
       "MooseX::Getopt::Usage" : {
          "file" : "lib/MooseX/Getopt/Usage.pm",
-         "version" : "0.22"
+         "version" : "0.24"
       },
       "MooseX::Getopt::Usage::Formatter" : {
          "file" : "lib/MooseX/Getopt/Usage/Formatter.pm",
-         "version" : "0.22"
+         "version" : "0.24"
       },
       "MooseX::Getopt::Usage::Pod::Text" : {
          "file" : "lib/MooseX/Getopt/Usage/Pod/Text.pm",
-         "version" : "0.22"
+         "version" : "0.24"
       },
       "MooseX::Getopt::Usage::Role::Man" : {
          "file" : "lib/MooseX/Getopt/Usage/Role/Man.pm",
-         "version" : "0.22"
+         "version" : "0.24"
       }
    },
    "release_status" : "stable",
    "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/markpitchless/moosex-getopt-usage/issues"
+      },
       "license" : [
          "http://dev.perl.org/licenses/"
-      ]
+      ],
+      "repository" : {
+         "url" : "https://github.com/markpitchless/moosex-getopt-usage"
+      }
    },
-   "version" : "0.22"
+   "version" : "0.24"
 }

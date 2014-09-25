@@ -20,16 +20,16 @@ name: MooseX-Getopt-Usage
 provides:
   MooseX::Getopt::Usage:
     file: lib/MooseX/Getopt/Usage.pm
-    version: 0.22
+    version: 0.24
   MooseX::Getopt::Usage::Formatter:
     file: lib/MooseX/Getopt/Usage/Formatter.pm
-    version: 0.22
+    version: 0.24
   MooseX::Getopt::Usage::Pod::Text:
     file: lib/MooseX/Getopt/Usage/Pod/Text.pm
-    version: 0.22
+    version: 0.24
   MooseX::Getopt::Usage::Role::Man:
     file: lib/MooseX/Getopt/Usage/Role/Man.pm
-    version: 0.22
+    version: 0.24
 requires:
   File::Basename: 0
   FindBin: 0
@@ -44,5 +44,7 @@ requires:
   Text::Wrap: 0
   Try::Tiny: 0.09
 resources:
+  bugtracker: https://github.com/markpitchless/moosex-getopt-usage/issues
   license: http://dev.perl.org/licenses/
-version: 0.22
+  repository: https://github.com/markpitchless/moosex-getopt-usage
+version: 0.24
